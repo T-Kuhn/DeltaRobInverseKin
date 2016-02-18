@@ -19,7 +19,7 @@ class DeltaRobInverseKin
         void setGoalCoordinates(double x, double y, double z);
         bool debugFlag;
         int goalPos[3];
-        int posArr[100][3];
+        int posArr[1000][3];
         int maxArrIndex;
     private:
         void _computePara_abc();
