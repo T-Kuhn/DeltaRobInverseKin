@@ -1,6 +1,5 @@
 /*
-  DeltaRobInverseKin.cpp - A small motor encoder library for the Arduino
-  prototyping platform. This library provides a way to evaluate, given
+  DeltaRobInverseKin.cpp -Å@This library provides a way to evaluate, given
   some x, y, z coordinates, the needed motor positions of a Delta Robot.
   Created by Tobias Kuhn, Sapporo, February 13, 2016. Released into the public domain.
   */
@@ -26,9 +25,12 @@ DeltaRobInverseKin::DeltaRobInverseKin(double L, double l, double wb, double wp,
     
     maxArrIndex = 0;
 
-    _rat = 294.1183348;
+    // The ratio of one full rotation of the motors in this mathematical model to
+    // one the number off pulses for one full rotation of the real motor:
+    // ratio = 2 * PI / pulses per rotation
+    _rat = 545.58;    
 
-    //debugFlag: computed parameters will be printed out when set to "true"
+    // debugFlag: computed parameters will be printed out when set to "true"
     debugFlag = false;
 }
 
@@ -66,6 +68,7 @@ void DeltaRobInverseKin::_computePara_abc()
     // The parameters here match up with the onces mentioned
     // in Robert L. William's Delta Robot Publication page 11 (see README.md)
     // Units: [m]
+
     _a = _wb - _up;
     _b = _sp / 2.0 - sqrt(3.0) / 2.0 * _wb; 
     _c = _wp - _wb / 2.0;
@@ -129,14 +132,13 @@ void DeltaRobInverseKin::_computePara_t()
         _t2Num[i] = -_F[i] - sqrt(pow(_E[i], 2) + pow(_F[i], 2) - pow(_G[i], 2));
         _t2Den[i] = _G[i] - _E[i];
     
-        _theta1[i] = 2 * atan(_t1Num[i] / _t1Den[i]);  //atan2(_t1Num[i], _t1Den[i]);
-        _theta2[i] = 2 * atan(_t2Num[i] / _t2Den[i]);  //atan2(_t2Num[i], _t2Den[i]);
+        _theta1[i] = 2 * atan(_t1Num[i] / _t1Den[i]);
+        _theta2[i] = 2 * atan(_t2Num[i] / _t2Den[i]);
     }
 
     if(debugFlag){
         for(int i = 0; i < 3; i++){
             Serial.print("i: ");    Serial.println(i);
-
             Serial.print("t1[i]: "); Serial.println(_t1Num[i] / _t1Den[i]);
             Serial.print("t2[i]: "); Serial.println(_t2Num[i] / _t2Den[i]);
             Serial.print("theta1[i]: "); Serial.println(_theta1[i]);
@@ -150,7 +152,6 @@ void DeltaRobInverseKin::_computePara_t()
 // - - - - - - - - - - - - - - - - - - - - - - -
 void DeltaRobInverseKin::_computeGoalPos()
 {
-
     for(int i = 0; i < 3; i++){
         posArr[maxArrIndex][i] = (int)(_theta2[i] * _rat);
         goalPos[i] = (int)(_theta2[i] * _rat); 

@@ -1,6 +1,5 @@
 /*
-  DeltaRobInverseKin.h - A small motor encoder library for the Arduino
-  prototyping platform. This library provides a way to evaluate, given
+  DeltaRobInverseKin.h -Å@This library provides a way to evaluate, given
   some x, y, z coordinates, the needed motor positions of a Delta Robot.
   Created by Tobias Kuhn, Sapporo, February 13, 2016. Released into the public domain.
   */
