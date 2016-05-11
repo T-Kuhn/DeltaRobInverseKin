@@ -37,12 +37,12 @@ DeltaRobInverseKin::DeltaRobInverseKin(double L, double l, double wb, double wp,
 // - - - - - - - - - - - - - - - - - - - - - - -
 // - - - DeltaRobInverseKin COMPUTEANGLES  - -
 // - - - - - - - - - - - - - - - - - - - - - - -
-void DeltaRobInverseKin::setGoalCoordinates(double x, double y, double z)
+void DeltaRobInverseKin::setGoalCoordinates(double x, double y, double z, int state)
 {
     _x = x;
     _y = y;
     _z = z;
-
+    _state = state;
     _computeAngles();
 }
 // - - - - - - - - - - - - - - - - - - - - - - -
@@ -156,13 +156,27 @@ void DeltaRobInverseKin::_computeGoalPos()
         posArr[maxArrIndex][i] = (int)(_theta2[i] * _rat);
         goalPos[i] = (int)(_theta2[i] * _rat); 
     }
+    posArr[maxArrIndex][3] = _state;
 
     maxArrIndex++;
 
     if(debugFlag){
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 4; i++){
             Serial.print("i: ");    Serial.println(i);
             Serial.print("goalPos[i]: "); Serial.println(goalPos[i]);
         }
     }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - -
+// - - - DeltaRobInverseKin RESET ARR  - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - -
+void DeltaRobInverseKin::resetArr()
+{
+    for(int i = 0; i <= 499; i++){
+        for(int j = 0; j <= 3; j++){
+            posArr[i][j] = 0;
+        }
+    }
+    maxArrIndex = 0;
 }

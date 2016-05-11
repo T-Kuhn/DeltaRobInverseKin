@@ -15,10 +15,11 @@ class DeltaRobInverseKin
 {
     public:
         DeltaRobInverseKin(double L, double l, double wb, double wp, double up, double sp);
-        void setGoalCoordinates(double x, double y, double z);
+        void setGoalCoordinates(double x, double y, double z, int state);
+        void resetArr();
         bool debugFlag;
         int goalPos[3];
-        int posArr[1000][3];
+        int posArr[500][4];
         int maxArrIndex;
     private:
         void _computePara_abc();
@@ -26,6 +27,7 @@ class DeltaRobInverseKin
         void _computePara_t();
         void _computeAngles();
         void _computeGoalPos();
+        int _state;
         double _rat;
         double _L, _l, _wb, _wp, _up, _sp;
         double _a, _b, _c;
