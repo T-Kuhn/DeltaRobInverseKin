@@ -5,6 +5,6 @@ This library provides a way to evaluate, given some x, y, z coordinates, the nee
 
 For more information on the mathematics applied here, take a look at this excellent publication:
 R.L. Williams II, "The Delta Parallel Robot: Kinematics Solutions", Internet Publication,
-www.ohio.edu/people/williar4/html/pdf/DeltaKin.pdf, January 2016. 
+https://www.researchgate.net/file.PostFileLoader.html?id=58bd7d14404854027f09f5d0&assetKey=AS%3A468931250003970%401488813330544, January 2016. 
 
 [click here to see the library in action](https://youtu.be/OGgQwnfzjP0)
